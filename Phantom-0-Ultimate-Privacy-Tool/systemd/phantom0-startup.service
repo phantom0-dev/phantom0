@@ -1,0 +1,17 @@
+[Unit]
+Description=phantom0 - startup
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+EnvironmentFile=-/etc/phantom0/phantom0.env
+ExecStart=/usr/local/bin/phantomctl start
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

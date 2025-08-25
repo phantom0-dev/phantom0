@@ -1,0 +1,20 @@
+{
+  "startup": {
+    "/home/neo -> ${REAL_HOME}": 5,
+    "~neo -> ${REAL_HOME}": 0,
+    "neo user contexts -> ${REAL_USER}": 1,
+    "interfaces -> placeholders": 17,
+    "LAN CIDRs -> ${ALLOWED_LAN_CIDRS}": 2,
+    "log paths -> ${LOG_DIR}": 0,
+    "legacy dirs -> ${LEGACY_DIR}": 0
+  },
+  "shutdown": {
+    "/home/neo -> ${REAL_HOME}": 3,
+    "~neo -> ${REAL_HOME}": 0,
+    "neo user contexts -> ${REAL_USER}": 0,
+    "interfaces -> placeholders": 0,
+    "LAN CIDRs -> ${ALLOWED_LAN_CIDRS}": 0,
+    "log paths -> ${LOG_DIR}": 0,
+    "legacy dirs -> ${LEGACY_DIR}": 0
+  }
+}

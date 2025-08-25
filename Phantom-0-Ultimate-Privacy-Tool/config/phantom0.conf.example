@@ -1,0 +1,23 @@
+# Phantom‑0 public skeleton configuration (example)
+
+# --- Ethics Gate (required) ---
+AGREE_TO_ETHICS=0      # set to 1 after reading ETHICS.md
+
+# --- Safety Defaults ---
+DRY_RUN=1              # run in non-destructive mode by default
+
+# --- Directories (RAM-only defaults) ---
+LOG_DIR="/run/phantom0/logs"
+RAM_AUDIT_DIR="/run/phantom0"
+
+# --- Networking (examples) ---
+PRIMARY_IFACE=""
+VPN_IFACE=""
+ALLOWED_LAN_CIDRS="192.168.0.0/16,10.0.0.0/8"
+ALLOW_PRINTERS=1
+
+# --- Modules (enable as you refactor in your private code) ---
+# ENABLE_LUKS=0
+# ENABLE_JOURNAL=0
+# ENABLE_NET_RULES=0
+# ENABLE_PROC_HIDE=0

@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PATH="$ROOT_DIR/modules/common:$PATH"
+
+source utils.sh
+source ethics_gate.sh
+source distro.sh
+
+usage() {
+  cat <<'USAGE'
+phantomctl <command> [--dry-run]
+
+Commands:
+  preflight       Run environment checks (no changes)
+  start           Execute startup flow (safe skeleton)
+  shutdown        Execute shutdown flow (safe skeleton)
+  audit           Show last RAM audit log if present
+  version         Print version
+
+Flags:
+  --dry-run       Force dry-run for this invocation (default from config)
+USAGE
+}
+
+CMD="${1:-}"; shift || true
+DRY_FLAG=0
+for arg in "$@"; do
+  if [[ "$arg" == "--dry-run" ]]; then DRY_FLAG=1; fi
+done
+
+load_config "$ROOT_DIR/config/phantom0.conf"
+
+if (( DRY_FLAG == 1 )); then DRY_RUN=1; fi
+export DRY_RUN
+
+case "${CMD:-}" in
+  preflight)
+    ethics_gate
+    detect_distro
+    log_info "Preflight OK: distro=$(echo ${DISTRO_FAMILY:-unknown}) dry_run=${DRY_RUN}"
+    ;;
+  start)
+    ethics_gate
+    detect_distro
+    "$ROOT_DIR/scripts/startup.sh"
+    ;;
+  shutdown)
+    ethics_gate
+    detect_distro
+    "$ROOT_DIR/scripts/shutdown.sh"
+    ;;
+  audit)
+    RAM_AUDIT="${RAM_AUDIT_DIR:-/run/phantom0}/audit.log"
+    if [[ -f "$RAM_AUDIT" ]]; then cat "$RAM_AUDIT"; else echo "No RAM audit log found"; fi
+    ;;
+  version)
+    "$ROOT_DIR/tools/version.sh" print
+    ;;
+  *)
+    usage; exit 1;;
+esac

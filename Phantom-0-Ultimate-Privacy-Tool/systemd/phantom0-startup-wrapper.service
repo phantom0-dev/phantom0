@@ -1,0 +1,17 @@
+[Unit]
+Description=phantom0-startup (wrapper with auto-detection)
+DefaultDependencies=no
+Before=graphical.target network-online.target
+After=local-fs.target network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=%h
+ExecStart=/mnt/data/phantom0-public-skeleton/scripts/startup-wrapper.sh --systemd-safe
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=phantom0 - shutdown
+DefaultDependencies=no
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+EnvironmentFile=-/etc/phantom0/phantom0.env
+ExecStart=/usr/local/bin/phantomctl shutdown
+TimeoutStopSec=300
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=shutdown.target

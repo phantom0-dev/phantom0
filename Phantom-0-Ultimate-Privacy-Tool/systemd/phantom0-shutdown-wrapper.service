@@ -1,0 +1,19 @@
+[Unit]
+Description=phantom0-shutdown (wrapper with auto-detection)
+DefaultDependencies=yes
+After=multi-user.target local-fs.target
+After=home.mount
+RequiresMountsFor=/home
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=%h
+ExecStart=/mnt/data/phantom0-public-skeleton/scripts/shutdown-wrapper.sh --systemd-safe
+TimeoutStopSec=300
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
